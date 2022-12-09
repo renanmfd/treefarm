@@ -29,6 +29,9 @@ local UNBREAKABLE_BLOCKS = {
   "enderstorage:ender_chest"
 }
 
+-- State saving file.
+local FILE_STATE = "bturtle.json"
+
 -- ============================================================================
 -- Variables ------------------------------------------------------------------
 
@@ -147,6 +150,41 @@ local function log(message, severity)
   term.setTextColor(color)
   print(message)
   term.setTextColor(colorOld)
+end
+
+-------------------------------------------------------------------------------
+-- @function private saveState()
+--
+-- Saving state.
+
+local function saveState()
+  local f, data
+  f = fs.open(FILE_STATE , "w")
+  data = {
+    "position" = position
+    "direction" = direction
+    "inventory" = inventory
+  }
+  f.close()
+end
+
+-------------------------------------------------------------------------------
+-- @function private loadState()
+--
+-- Loading state.
+
+local function loadState()
+  local f, x, y, z, data
+  if not fs.exists(FILE_STATE) then
+    return false
+  end
+  f = fs.open(FILE_STATE, "r")
+  data = f.readAll()
+  position = data["position"]
+  direction = data["direction"]
+  inventory = data["inventory"]
+  f.close()
+  return true
 end
 
 -------------------------------------------------------------------------------
@@ -1061,7 +1099,9 @@ end
 -- Initialize turtle.
 
 init = function ()
-  local success, timeout
+  local success, timeout, isStateLoaded
+
+  isStateLoaded = loadState()
 
   -- Set position with GPS.
   log ("Set position", LOG_DEBUG)
@@ -1074,7 +1114,10 @@ init = function ()
     timeout = timeout + 1
     if timeout > 10 then
       haveGPS = false
-      position = vector.new(0, 0, 0)
+      if not isStateLoaded then
+        position = vector.new(0, 0, 0)
+        direction = DIRECTION_NORTH
+      end
       return false
     end
   end
@@ -1091,12 +1134,16 @@ init = function ()
     timeout = timeout + 1
     if timeout > 10 then
       haveGPS = false
-      position = vector.new(0, 0, 0)
+      if not isStateLoaded then
+        position = vector.new(0, 0, 0)
+        direction = DIRECTION_NORTH
+      end
       return false
     end
   end
   log ("init() - Direction = " .. facing, LOG_DEBUG)
 
+  -- Confirm turtle initialization to unblock other functions.
   haveInit = true
 
   return position ~= nil and facing ~= nil
