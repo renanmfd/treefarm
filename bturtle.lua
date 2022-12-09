@@ -23,10 +23,10 @@ local LOG_DEBUG   = 24
 
 -- Initial inventory mapping.
 local UNBREAKABLE_BLOCKS = {
-  "computecraft:turtle"
-  "computecraft:advanced_turtle"
-  "chickenchunks:chunk_loader"
-  "enderstorage:ender_chest"
+  "computecraft:turtle",
+  "computecraft:advanced_turtle",
+  "chickenchunks:chunk_loader",
+  "enderstorage:ender_chest",
 }
 
 -- State saving file.
