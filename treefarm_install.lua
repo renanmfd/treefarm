@@ -20,9 +20,9 @@ print("Instaling...")
 
 shell.run("label set treefarm-" .. os.getComputerID())
 shell.run("rom/programs/set modt.enabled false")
-shell.run("rom/programs/http/wget https://raw.githubusercontent.com/renanmfd/treefarm/master/bturtle.lua bturtle")
-shell.run("rom/programs/http/wget https://raw.githubusercontent.com/renanmfd/treefarm/master/treefarm.lua startup")
+shell.run("rom/programs/http/wget https://raw.githubusercontent.com/renanmfd/treefarm/main/bturtle.lua bturtle")
+shell.run("rom/programs/http/wget https://raw.githubusercontent.com/renanmfd/treefarm/main/treefarm.lua startup")
 
 print("Done!")
 
--- wget https://raw.githubusercontent.com/renanmfd/treefarm/master/treefarm_isntall.lua install
+-- wget https://raw.githubusercontent.com/renanmfd/treefarm/main/treefarm_install.lua install

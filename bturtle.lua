@@ -165,6 +165,7 @@ local function saveState()
     "direction" = direction
     "inventory" = inventory
   }
+  f.write(textutils.serializeJSON(data))
   f.close()
 end
 
@@ -179,7 +180,7 @@ local function loadState()
     return false
   end
   f = fs.open(FILE_STATE, "r")
-  data = f.readAll()
+  data = textutils.unserializeJSON(f.readAll())
   position = data["position"]
   direction = data["direction"]
   inventory = data["inventory"]
