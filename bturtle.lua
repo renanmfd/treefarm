@@ -37,9 +37,9 @@ local FILE_STATE = "bturtle.json"
 
 -- Initial inventory mapping.
 local inventory = {
-  1 = "fuel"
-  2 = "unload"
-  3 = "free"
+  1 = "fuel",
+  2 = "unload",
+  3 = "free",
 }
 
 -- Direction the turtle is facing.
